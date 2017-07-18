@@ -1,0 +1,288 @@
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, caption {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+	margin-bottom: 150px;
+}
+
+.navbar-brand {
+	display: inline-block;
+	font-family: "Bangers";
+	color: white;
+	position: relative;
+	font-size: 35px;
+	margin: auto;
+	left: 140%;
+}
+
+.navigation ul{
+	display: inline-block;
+	position: relative;
+	color: white;
+	font-family: "Arial";
+	font-size: 80%;
+	float: right;
+	margin-top: 0px;
+	right: 240px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.navigation li{
+	display: inline-block;
+	padding: 0px 8px;
+	margin: 0px 10px;
+	text-align: center;
+}
+
+
+#myCarousel img {
+	margin: auto;
+}
+
+.content {
+	position: relative;
+	margin: auto;
+	width: 65%;
+	padding-top: 20px;
+	padding-top: 20px;
+	font-family: "Roboto";
+}
+
+.content h2{
+	margin-top: 20px;
+	margin-bottom: 20px;
+	font-size: 120%;
+	color: #878685;
+}
+
+.content h1{
+	margin-top: 40px;
+	font-size: 150%;
+	color: black;
+}
+
+.content .comicTitle {
+	position: relative;
+	font-size: 100%;
+	color: black;
+	overflow: auto;
+	display: block;
+	margin: 15px 0px 5px 0px; 
+	padding-bottom: 1px;
+	text-align: center;
+}
+
+.content .caption {
+	position: relative;
+	font-size: 90%;
+	height: 100px;
+	margin: 0px 0px 10px 0px; 
+	display: block;
+}
+
+.content .constraint {
+	display: block;
+	text-align: center;
+	padding: 5px 0;
+	color: white;
+	background-color: #ff7d4f;
+	opacity: 0.9;
+
+}
+
+.content .premium {
+	display: block;
+	text-align: center;
+	padding: 5px 0;
+	color: black;
+	background-color: #f4f416;
+	opacity: 0.9;
+}
+
+.read {
+	position: relative;
+	font-size: 90%; 
+	font-weight: lighter;
+	height: 6%;
+	width: 50%;
+	display: block;
+	background-color: #ff7d4f;
+	color: white;
+	margin-top: 0px;
+	margin-bottom: 10px;
+	text-align: center;
+	padding-top: 5px;
+	padding-bottom: 10px;
+	border-radius: 10px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.content .read a{
+	text-decoration: none;
+}
+
+.content .read a:visited {
+	color: white;
+}
+
+.content .read a:link {
+	color: white;
+}
+
+.content .read a:active {
+	color: white;
+}
+
+.content form {
+	border-radius: 5px;
+	border: 1px solid #ccc;
+	padding-top: 30px;
+	padding-bottom: 30px;	
+}
+
+.content table, th, td {
+    border: 1px solid black;
+    text-align: center;
+    padding: 5px 0;
+}
+
+.content th {
+	background-color: #ff7d4f;
+	color: white;
+}
+
+.content tr {
+	background-color: #ffb9a0;
+}
+
+form div {
+	margin: 0 auto;
+	display: block;
+	width: 100%;
+}
+
+form label {
+	padding-left: 1em;
+	text-align: right;
+	margin-right: 20px;
+	float: left;
+	display: inline-block;
+	margin-top: 25px;
+	margin-bottom: 25px;
+	width: 200px;
+}
+
+form input {
+	border-radius: 10px;
+	border: 1px solid #ccc;
+	margin: 15px 10px;
+	width: 25%;
+	box-sizing: border-box;
+	padding: 10px 0;
+	width: 40%;
+	display: inline-block;
+}
+
+form .submitbtn {
+	position: relative;
+	font-size: 100%; 
+	font-weight: lighter;
+	height: 7%;
+	width: 30%;
+	display: block;
+	background-color: #ff7d4f;
+	color: white;
+	margin-top: 25px;
+	margin-bottom: 10px;
+	text-align: center;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	margin-left: auto;
+	margin-right: auto;
+	border: none;
+}
+
+footer {
+	position: absolute;
+	font-family: "Roboto";
+	color: white;
+	width: 100%;
+	background-color: black;
+	text-align: center;
+	font-weight: lighter;
+	font-size: 70%;
+	bottom: 0;
+}
+
+footer p {
+	padding: 10px 0px 50px 0px;
+	margin-top: 0px;
+}
+
+@media all and (max-width: 768px) {
+	.navigation li { 
+		width: 100%; 
+		border-bottom: 1px solid #555; 
+		display: block;
+		padding: 10px 0px;
+		margin: 0px;
+	}
+
+	.navigation ul {
+		width: 100%;
+		margin: 0px;
+		padding: 0px;
+		right: 0px;
+	}
+
+	.navigation li:hover {
+		background-color: #ff7d4f;
+	}	
+
+	body > header > div > div.navbar-collapse {
+		padding-left: 0px;
+		padding-right: 0px;
+	}
+
+	.content {
+		width: 90%;
+	}
+}
+
+@media (max-width: 1400px) {
+	.navigation ul {
+		right: 0%;
+	}
+
+	.navbar-brand {
+		left: 0%;
+	}
+
+	.content {
+		width: 70%;
+	}
+}
+
+@media (min-width: 1401px) and (max-width: 1600px) {
+	.navigation ul {
+		right: 5%;
+	}
+
+	.navbar-brand {
+		left: 50%;
+	}
+}

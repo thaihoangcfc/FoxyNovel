@@ -1,8 +1,3 @@
-<?php
-	session_start();
-	if(isset($_SESSION['login_user']))
-		header('location: index.php');
-?>
 <!DOCTYPE HTML>
 <html>
 	<head>
@@ -16,9 +11,8 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-		<script type="text/javascript" src="text/script.js"></script>
-		<link href="styles/navbar.css" rel="stylesheet" type="text/css">
-		<link href="styles/style.css" rel="stylesheet" type="text/css">
+		<link href="navbar.css" rel="stylesheet" type="text/css">
+		<link href="style.css" rel="stylesheet" type="text/css">
 	</head>
 
 
@@ -50,19 +44,43 @@
 
 
 		<div class="content">
-			<h1 style="margin-bottom: 20px; text-align: center;">Đăng nhập</h1><br/>
-			<form class="login_form" method="post" action="signin.php">
-				<div>
-					<label>Tên đăng nhập</label>
-					<input type="text" name="username" required><br/>
-				</div>
-				
-				<div>
-					<label>Mật khẩu</label>
-					<input type="password" name="password" required><br/>
-				</div>
+			<h1 style="margin-bottom: 20px; text-align: center;">AJAX TEST</h1><br/>
+				<?php
+					include ('dbconnection.php');
+					$current_user = 'thaihoangcfc';
+					$isbn = '1234567890128';
 
-				<button class="submitbtn" type="submit" style="">Đăng nhập</button>
+					$book_to_add = array (
+									"username" => $current_user,
+									"isbn" => $isbn
+								);
+					
+					// echo $bookJSON;
+					// echo gettype($bookJSON);
+					echo gettype($book_to_add);
+					echo '<span class="add_library-0" onclick="add_library()">Đăng nhập</span>';
+				?>
+
+				<script>		
+					function add_library() {
+						var data = <?php echo json_encode($book_to_add); ?>;
+						//alert(test);
+						$.ajax({
+					        type: "POST",
+					        url: "add_library.php",
+					        data: {myData:data},
+					        // dataType: 'json',
+					        success: function(response){
+					        	//alert(response);
+					        	$(".add_library-0").html(response);
+					        	$(".add_library-0").css("background-color", "#64aa1e");
+					        },
+					        error: function(data){
+					            alert('fail');
+					        }
+					    });
+					};
+				</script>
 			</form>
 
 		</div>

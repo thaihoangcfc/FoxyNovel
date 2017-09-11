@@ -1,5 +1,8 @@
 <?php
 	session_start();
+	include ('library_get.php');
+	include ('user_fetch_info.php');
+	include ('user_library_get.php');
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -60,43 +63,109 @@
 			</div>
 		</header>
 
+		<span class="noti"></span>
+
 		<div class="content">
 			<h2>THƯ VIỆN</h2>
 			<div class="row">
-				<?php
-					include ('library_get.php');
-					include ('membership_constraint.php');
 
-					for ($i=0;$i<count($book);$i++)
+				<!-- display all books -->
+				<?php
+					$quote = "'";
+
+					for ($i = 0; $i < count($book); $i++)
 					{
 						echo '<div class="col-md-3" style="margin-bottom: 10px;">';
 							echo '<div class="thumbnail" style="position: relative;">';
 								
-								//Specify novel availibility based on user type
-								if (isset($_SESSION['login_user']))
+
+								if ((isset($_SESSION['login_user']) && $current_user_membership == 'free') || (!isset($_SESSION['login_user'])))
 								{
-									if (($current_user_membership == 'free') && ($book[$i][8] == 'premium'))
+									if ($book[$i][8] == 'free')
 									{
 										echo '<div style="position: absolute; z-index:10; width: 100%; right: 0px;">';
-										echo '<span class="premium">Premium</span>';
 										echo '<span class="constraint">2 Chương đầu</span>';
 										echo '</div>';
 									}
+									if ($book[$i][8] == 'premium')
+									{
+										echo '<div style="position: absolute; z-index:10; width: 100%; right: 0px;">';
+										echo '<span class="premium">Premium</span>';
+										echo '</div>';
+									}
 								}
-								else echo '<span class="constraint">2 Chương đầu</span>';
 
 
 								echo '<img src="images/rezero.jpg" alt="ReZero" style="width: 100%; position: relative;">
-									<h3 class="comicTitle"><a href="#">' . $book[$i][0] .'</a></h3>
-									<div class="caption">
-									<p class="text-justify">' . $book[$i][6] . '</p>
-								</div>';
+									<h3 class="comicTitle"><a href="#">' . $book[$i][0] .'</a></h3>';
 								echo '<span class="read"><a href="#">ĐỌC TRUYỆN</a></span>';
+
+								if (isset($_SESSION['login_user']))
+								{
+									if (($current_user_membership == "premium") && ($book[$i][8] == "free"))
+									{
+										//Identify books that has been added to personal bookmark
+										for ($j = 0; $j < count($isbn); $j++)
+										{
+											if ($book[$i][2] == $isbn[$j])
+											{
+												echo '<span class="add_library-' . $i . '" onclick="add_library('. $i . ',' . $quote . $current_user . $quote . ',' . $quote . $book[$i][2] . $quote . ')" style="background-color: #64aa1e;">ĐÃ THÊM VÀO BOOKMARK</span>';
+												break;
+											}
+
+											if ($j == count($isbn) - 1)
+											{
+												echo '<span class="add_library-' . $i . '" onclick="add_library('. $i . ',' . $quote . $current_user . $quote . ',' . $quote . $book[$i][2] . $quote . ')">THÊM VÀO BOOKMARK</span>';
+											}
+										}
+															
+									}
+
+									if (($current_user_membership == "premium") && ($book[$i][8] == "premium"))
+									{
+										echo '<span class="buy"><a href="#" style="color: white; text-decoration: none;">MUA TRUYỆN</a></span>';
+									}
+								}
 							echo '</div>';
 						echo '</div>';
 					}
-
 				?>
+
+				<script>
+					// var i = 0;
+					// while (i < <?php //echo count($book); ?>)
+					// {
+					// 	if ()
+					// }
+ 
+					function add_library(index, user, isbn) { 
+						
+						// var data = '{'
+						// 	+ '"username" : user 
+						// 	+ '"' + ',"isbn":' + '"' + isbn + '"' + '}';
+				
+						var book_to_add = new Object();
+						book_to_add.username = user;
+						book_to_add.isbn = isbn;
+
+						var data = JSON.stringify(book_to_add);
+
+						$.ajax({
+					        type: "POST",
+					        url: "add_library.php",
+					        data: {myData:data},
+					        // dataType: 'json',
+					        success: function(response){
+					        	//alert(response);
+					        	$(".noti").html(response);
+					        	$(".noti").css("visibility", "visible");
+					        	$(".noti").fadeIn(500).delay(2000).fadeOut(500);
+					        	$(".add_library-" + index).css("background-color", "#64aa1e");
+					        	$(".add_library-" + index).html("ĐÃ THÊM VÀO BOOKMARK");
+					        }
+					    });
+					};
+				</script>
 			</div>
 		</div>
 

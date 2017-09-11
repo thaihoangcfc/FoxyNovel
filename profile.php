@@ -64,41 +64,111 @@
 
 
 		<div class="content" style="padding-top: 100px;">
-			<div class="main_profile" style="display:block;">
-				<img src="images/profile_avatar.png" alt="profile_avatar" style="width:15%; display: inline-block;">
-				<?php
-					echo '<h1 style="margin: 0px; display: inline-block;">' . ($_SESSION['login_user']) . '</h1>';
-				?>
+			<div style="display: inline-block; width: 30%;">
+				<div class="main_profile" style="display:block; width: 70%;">
+					<img src="images/profile_avatar.png" alt="profile_avatar" style="width:80%; display: block; margin: 0 auto;">
+					<?php
+						echo '<h1 class="username">' . ($_SESSION['login_user']) . '</h1>';
+					?>
+				</div>
+
+				<div class="profile_desc">
+				
+					<?php
+						//Open connection to MySQL database
+						include('user_fetch_info.php');
+						include('date_reformat.php');
+
+						//Output profile information
+						
+						// echo '<p>Ngày tham gia: ' . date_reformat($row[4]) . '</p>';
+						// echo '<p>Gói thành viên: ' . strtoupper($row[5]);
+					?>
+
+				</div>
 			</div>
 
-			<div class="profile_desc" style="display:block; margin-top: 50px;">
-			
-				<?php
-					//Open connection to MySQL database
-					include('config.php');
-					include('user_age.php');
-					$conn = new mysqli($host,$user,$pwd,$dbname);
+			<div style="width: 69%; display: inline-block; float: right;">
+				<div style="padding-bottom:0px;">
+					<h1 style="margin-top: 0px; border-bottom: 2px solid #ff7d4f; padding-bottom: 10px;">Thông tin cá nhân</h1>
 
-					//Fetching user data from user table
-					$current_user = ($_SESSION['login_user']);
-					$sql = "SELECT * FROM user where username = '$current_user'";
-					$result = $conn->query($sql);
-					$row = $result->fetch_row();
-
-					//Re-format Date
-					$dob = explode('-',$row[3]);
-					$age = userAge($row[3]);
-					$join_date = explode('-',$row[4]);
-
-
-					//Output profile information
-					echo '<p>Ngày sinh: ' . $dob[2] . '-' . $dob[1] . '-' . $dob[0] . '</p>';
-					echo '<p>Tuổi: ' . $age. '</p>';
-					echo '<p>Ngày tham gia: ' . $join_date[2] . '-' . $join_date[1] . '-' . $join_date[0] . '</p>';
-					echo '<p>Gói thành viên: ' . strtoupper($row[5]);
-				?>
+					<?php
+						
+						//$current_user_membership = $row[5];
+						echo '<p class="profile_info">Ngày sinh: ' . date_reformat($row[3]) . '</p>';
+						echo '<p class="profile_info">Tuổi: ' . $age. '</p>';
+						echo '<p class="profile_info">Email: ' . $row[2]. '</p>';
+						echo '<p class="profile_info">Ngày tham gia: ' . date_reformat($row[4]) . '</p>';
+						echo '<p class="profile_info">Gói thành viên: ' . strtoupper($row[5]);
+					?>
+				</div>
 
 			</div>
+
+			<div>
+				<h1 style="margin-top: 100px; border-bottom: 2px solid #ff7d4f; padding-bottom: 10px; margin-bottom: 20px;">Thư viện riêng</h1>
+
+					<?php
+						$current_user = $_SESSION['login_user'];
+						
+						$sql = "SELECT * FROM user_library where username='$current_user'";
+							
+						$result = $conn->query($sql);
+
+						//initialize array data
+						$book = array();
+
+						//Assign fetched data to specified array
+						$row_counter = 0;
+
+						while ($row = $result->fetch_array())
+						{
+							for ($field_counter = 0; $field_counter < $result->field_count; $field_counter++)
+								$book[$row_counter][$field_counter] = $row[$field_counter];
+							$row_counter++;
+						}	
+					?>
+
+					
+						<?php
+							include ('fetch_library.php');
+							if ($current_user_membership == "premium")
+							{
+								if ($book == null)
+								{
+									echo '<p style="text-align: center; font-style: italic;">Bạn chưa có truyện trong thư viện riêng, hãy đến <a href="mylibrary.php">thư viện</a> tìm cuốn truyện bạn ưa thích.</p>';
+								}
+								else
+								{
+									for ($i=0;$i<count($book);$i++)
+									{
+										echo '
+										<div class="comicLibrary" style="margin-top: 20px;">
+											<table style="border: none;">
+												<tr style="background-color: white; text-align: left; border: none; ">
+													<td style="border: none; text-align: left; padding: 0; width: 10%;"><div>
+														<img src="images/rezero.jpg" alt="ReZero" style="width: 100%;">
+													</div></td>
+													<td style="border: none; text-align: left; padding: 0; width: 50%; vertical-align: top; padding-left: 10px; padding-right: 50px;"><div>
+														<h1 style="margin-top: 5px; margin-bottom: 10px; font-size: 130%;">'. $book[$i][0] . '</h1>
+														<p style="">' . $book[$i][1] . '</p>
+													</div></td>
+													<td style="border: none; text-align: left; padding: 0; width: 10%; vertical-align: bottom; padding-bottom: 5px;"><div>
+														<span class="read" style="width: 100%; margin: 0 0; padding: 7px 0; position: relative;"><a href="#">ĐỌC TRUYỆN</a></span>
+													</div></td>
+												</tr>
+											</table>
+										</div>';
+									}
+								}
+							}
+							else
+							{
+								echo '<p style="text-align: center; font-style: italic;">Thư viện riêng chỉ dành cho thành viên <a href="#">Premium</a></p>';
+							}
+						?>
+			</div>
+
 		</div>
 
 		<footer>

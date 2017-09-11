@@ -1,7 +1,8 @@
 <?php
 	session_start();
-	if(isset($_SESSION['login_user']))
-		header('location: index.php');
+	include ('library_get.php');
+	include ('user_fetch_info.php');
+	include ('user_library_get.php');
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -40,31 +41,34 @@
 		      		<ul class="nav navbar-nav" id="nav">
 						<li><a href="schedule.php">LỊCH PHÁT HÀNH</a></li>
 						<li><a href="#">TRUYỆN MỚI</a></li>
-						<li><a href="mylibrary.php">THƯ VIỆN</a></li>
-						<li><a href="register.php">ĐĂNG KÍ</a></li>
-						<li><a href="#">ĐĂNG NHẬP</a></li>
+						<li><a href="#">THƯ VIỆN</a></li>
+						<li>
+							<?php 
+								if(isset($_SESSION['login_user']))
+									echo '<a href="profile.php">'. strtoupper ($_SESSION['login_user']) .'</a>';
+								else
+									echo '<a href="register.php">ĐĂNG KÍ</a>';
+							?>
+						</li>
+						<li>
+							<?php 
+								if(isset($_SESSION['login_user']))
+									echo '<a href="logout.php">ĐĂNG XUẤT</a>';
+								else
+									echo '<a href="login.php">ĐĂNG NHẬP</a>';
+							?>
+						</li>
 					</ul>
 				</div>
 			</div>
 		</header>
 
+		<span class="noti"></span>
 
 		<div class="content">
-			<h1 style="margin-bottom: 20px; text-align: center;">Đăng nhập</h1><br/>
-			<form class="login_form" method="post" action="signin.php">
-				<div>
-					<label>Tên đăng nhập</label>
-					<input type="text" name="username" required><br/>
-				</div>
-				
-				<div>
-					<label>Mật khẩu</label>
-					<input type="password" name="password" required><br/>
-				</div>
-
-				<button class="submitbtn" type="submit" style="">Đăng nhập</button>
-			</form>
-
+			<h2>GÓI THÀNH VIÊN</h2>
+			
+			
 		</div>
 
 		<footer>

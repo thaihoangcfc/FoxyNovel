@@ -1,31 +1,24 @@
 <?php
 	//open connection to database
 	include('config.php');
-	include('user_age.php');
+	//ssinclude('user_age.php');
 
 	$conn = new mysqli($host,$user,$pwd,$dbname);
 	$conn->set_charset('utf8');
 
-	if (isset($_SESSION['login_user']))
-	{
-		//specify current session user
-		$current_user = $_SESSION['login_user'];
+	// if (isset($_SESSION['login_user']))
+	// {
+	// 	//specify current session user
+	// 	$current_user = $_SESSION['login_user'];
 									
-		//retrieve current user data
-		$sql = "SELECT * FROM user where username = '$current_user'";
-		$result = $conn->query($sql);
-		$row = $result->fetch_row();
+	// 	//retrieve current user data
+	// 	$sql = "SELECT * FROM user where username = '$current_user'";
+	// 	$result = $conn->query($sql);
+	// 	$row = $result->fetch_row();
 
-		//specify current user age
-		$current_user_age = userAge($row[3]);
-
-		//query data
-		$sql = "SELECT * FROM book where age <= '$current_user_age' order by name, membership_type";
-	}
-	else
-	{
-		$sql = "SELECT * FROM book order by name";	
-	}
+	// 	//query data
+	// }
+	$sql = "SELECT * FROM book order by membership_type, name";
 
 	
 	$result = $conn->query($sql);

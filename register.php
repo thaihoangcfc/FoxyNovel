@@ -51,24 +51,24 @@
 
 		<div class="content">
 			<h1 style="margin-bottom: 20px; text-align: center;">Đăng kí</h1><br/>
-			<form method="post" action="signup.php">
-				<div class="username">
+			<form class="register_form" method="post" action="signup.php">
+				<div>
 					<label>Tên đăng nhập</label>
 					<input type="text" name="username" required><br/>
 				</div>
-				<div class="email">
+				<div>
 					<label>Email</label>
 					<input type="text" name="email" required><br/>
 				</div>
-				<div class="password">
+				<div>
 					<label>Mật khẩu</label>
 					<input type="password" name="password" required><br/>
 				</div>
-				<div class="rpassword">
+				<div>
 					<label>Xác nhận mật khẩu</label>
 					<input type="password" name="rpassword" required><br/>
 				</div>
-				<div class="birthday">
+				<div>
 					<label>Ngày sinh</label>
 					<input type="date" name="birthday" required><br/>
 				</div>
